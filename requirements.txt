@@ -1,0 +1,8 @@
+### dependency
+tqdm
+dvc
+pandas
+scikit-learn
+
+### local package -
+#-e . # << uncomment this to install from setup.py
