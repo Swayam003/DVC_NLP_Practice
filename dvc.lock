@@ -1,11 +1,11 @@
 schema: '2.0'
 stages:
   prepare_data:
-    cmd: python src/stage_01_prepare.py
+    cmd: python src/stage_01_prepare.py --config=config/config.yaml --params=params.yaml
     deps:
     - path: config/config.yaml
-      md5: acab84b274caad14bf3c9ba6a855e9eb
-      size: 227
+      md5: e2bfadddf7a7c4f8a4042b3c4f306846
+      size: 324
     - path: data/data.xml
       md5: a304afb96060aad90176268345e10355
       size: 37891850
@@ -13,8 +13,8 @@ stages:
       md5: 95cf72c4cdeb55b0093a3591d1a84135
       size: 2060
     - path: src/utils/all_utils.py
-      md5: 2202c942a804d96250f03760a00ca972
-      size: 503
+      md5: f97008e907c7c0ab49c83cf819e64753
+      size: 828
     - path: src/utils/data_mngt.py
       md5: 6a86fff1eb5a10c2db6680ecc08bf60b
       size: 870
@@ -29,3 +29,38 @@ stages:
     - path: artifacts/prepared/train.tsv
       md5: 553034c4cf40efc63c99c19fe98610d0
       size: 18986541
+  featurize:
+    cmd: python src/stage_02_featurization.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/prepared/test.tsv
+      md5: 60c757f3b30604473de7fa775dfc00d9
+      size: 4899778
+    - path: artifacts/prepared/train.tsv
+      md5: 553034c4cf40efc63c99c19fe98610d0
+      size: 18986541
+    - path: config/config.yaml
+      md5: e2bfadddf7a7c4f8a4042b3c4f306846
+      size: 324
+    - path: params.yaml
+      md5: 23a209f31cc72b202ab1c69326a62d30
+      size: 155
+    - path: src/stage_02_featurization.py
+      md5: 2073ceac64f4fec5e19c1709352202e8
+      size: 3413
+    - path: src/utils/all_utils.py
+      md5: f97008e907c7c0ab49c83cf819e64753
+      size: 828
+    - path: src/utils/featurize.py
+      md5: 91d515f8a5c06f0d0c055c0f3b6b3125
+      size: 516
+    params:
+      params.yaml:
+        featurize.max_features: 3000
+        featurize.ngrams: 2
+    outs:
+    - path: artifacts/features/test.pkl
+      md5: 81164fa4daecfc05da4ad928f4144482
+      size: 2597441
+    - path: artifacts/features/train.pkl
+      md5: 30c0f34f19273c212412655d72e44c2a
+      size: 10134729
